@@ -1,70 +1,135 @@
-# Getting Started with Create React App
+# **Quiz de Programação**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📚 **Descrição**
+Um quiz interativo e dinâmico sobre programação, desenvolvido em React. O projeto permite escolher categorias, responder perguntas aleatórias e acompanhar a pontuação ao final do jogo. Inclui funcionalidades como dicas e exclusão de opções para auxiliar nas respostas.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🎯 **Funcionalidades**
+- **Escolha de Categorias:** Selecione uma categoria para iniciar o quiz.  
+- **Reordenação de Perguntas:** Perguntas embaralhadas para tornar o jogo mais desafiador.  
+- **Dicas e Ajuda:** Receba dicas ou remova opções incorretas para facilitar sua decisão.  
+- **Pontuação Dinâmica:** Veja sua pontuação ser atualizada em tempo real após cada resposta.  
+- **Fluxo de Jogo Intuitivo:** Ciclo completo com telas de início, escolha de categoria, perguntas e finalização.  
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ **Tecnologias Utilizadas**
+- **React:** Biblioteca principal para construção da interface.  
+- **Context API e useReducer:** Gerenciamento de estado global e manipulação de ações.  
+- **CSS:** Estilização de componentes com arquivos separados por funcionalidade.  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🚀 **Como Rodar o Projeto**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone este repositório:
+   ```bash
+   git clone <url-do-repositorio>
+   ```
+2. Acesse o diretório do projeto:
+   ```bash
+   cd quiz
+   ```
+3. Instale as dependências:
+   ```bash
+   npm install
+   ```
+4. Inicie o projeto:
+   ```bash
+   npm start
+   ```
+5. Abra o navegador e acesse:
+   ```
+   http://localhost:3000
+   ```
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🖼️ **Capturas de Tela**
+Abaixo estão algumas imagens do projeto em funcionamento:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1. Tela de Boas-Vindas
+![Tela de Boas-Vindas](public/prints/tela1.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 2. Escolha de Categorias
+![Escolha de Categorias](public/prints/tela2.png)
 
-### `npm run eject`
+### 3. Pergunta Atual
+![Pergunta Atual](public/prints/tela3.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 4. Tela de Pontuação Final
+![Tela de Pontuação Final](public/prints/tela4.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 📁 **Estrutura do Projeto**
+```
+quiz/
+├── public/
+│   ├── prints/                # Imagens das telas
+│   └── index.html             # HTML principal
+├── src/
+│   ├── components/            # Componentes reutilizáveis
+│   │   ├── Welcome.js         # Tela inicial
+│   │   ├── PickCategory.js    # Escolha de categoria
+│   │   ├── Question.js        # Perguntas e opções
+│   │   └── GameOver.js        # Tela de finalização
+│   ├── Context/               # Contexto do quiz
+│   │   └── quiz.js            # Gerenciamento de estado global
+│   ├── data/                  # Banco de perguntas
+│   ├── imgsapp/               # Imagens utilizadas no app
+│   ├── App.css                # Estilos globais
+│   ├── App.js                 # Arquivo principal do React
+│   └── index.js               # Renderização do React
+├── package.json               # Configurações do projeto
+└── README.md                  # Documentação
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🌟 **Destaques do Código**
+### Contexto Global do Quiz (quiz.js)
+Utiliza `useReducer` para gerenciar o estado e as ações:
+```javascript
+const initialState = {
+  gameStage: "Start",
+  questions,
+  currentQuestion: 0,
+  answerSelected: false,
+  score: 0,
+  help: false,
+  optionToHide: null,
+};
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+const quizReducer = (state, action) => {
+  switch (action.type) {
+    case "CHANGE_STAGE":
+      return { ...state, gameStage: "Category" };
+    case "START_GAME":
+      return {
+        ...state,
+        questions: action.payload,
+        gameStage: "Playing",
+      };
+    default:
+      return state;
+  }
+};
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Componentização com Props
+O componente `Option` exibe as opções de resposta dinamicamente:  
+```javascript
+const Option = ({ option, selectOption, answer, hide }) => {
+  return (
+    <div
+      onClick={selectOption}
+      className={`option ${hide ? "hide" : ""}`}
+    >
+      <p>{option}</p>
+    </div>
+  );
+};
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
